@@ -9,11 +9,14 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
+	"strings"
 )
 
 func main() {
 	searcher := Searcher{}
 	err := searcher.Load("completeworks.txt")
+	// err := searcher.Load("partialworks.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -73,10 +76,31 @@ func (s *Searcher) Load(filename string) error {
 }
 
 func (s *Searcher) Search(query string) []string {
-	idxs := s.SuffixArray.Lookup([]byte(query), -1)
+	regex, _ := regexp.Compile("(?i)" + strings.Replace(query, " ", "[ \\._-]", -1))
+	idxs := regex.FindAllIndex([]byte(s.CompleteWorks), -1)
 	results := []string{}
+	lines_before := 1
+	lines_after := 2
 	for _, idx := range idxs {
-		results = append(results, s.CompleteWorks[idx-250:idx+250])
+		count := 0
+		for ; idx[0] != 0; idx[0]-- {
+			if s.CompleteWorks[idx[0]] == 13 {
+				count++
+			}
+			if count == lines_before*2+1 {
+				break
+			}
+		}
+		count = 0
+		for ; idx[1] != len(s.CompleteWorks)-1; idx[1]++ {
+			if s.CompleteWorks[idx[1]] == 13 {
+				count++
+			}
+			if count == lines_after*2+1 {
+				break
+			}
+		}
+		results = append(results, s.CompleteWorks[idx[0]:idx[1]])
 	}
 	return results
 }
