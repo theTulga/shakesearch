@@ -1,0 +1,142 @@
+.App {
+  text-align: center;
+  background-color: #E1DDD7;
+  height: 100vh;
+  display: flex;
+  flex-direction: column; 
+  color: #8A8070;
+  font-family: Mrs Eaves OT;
+}
+
+.upperleft-title {
+  position: absolute;
+  width: 190px;
+  height: 33px;
+  left: 45px;
+  top: 29px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 26px;
+
+  color: #000000;
+
+  opacity: 0.3;
+}
+
+.search-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+}
+
+.left-box {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar {
+  border: none;
+  background: none;
+  height: 45px;
+  margin-left: 26px;
+  font-style: normal;
+  font-weight: normal;
+  font-family: Mrs Eaves OT;
+  font-size: 42px;
+  line-height: 45px;
+  color: #8a8070;
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.search-bar:focus{
+  outline: none;
+  border: none;
+  background: none;
+  height: 45px;
+  margin-left: 26px;
+  font-style: normal;
+  font-weight: normal;
+  font-family: Mrs Eaves OT;
+  font-size: 42px;
+  line-height: 45px;
+  color: #8a8070;
+}
+
+.submit-btn:active{
+  outline: none;
+}
+
+ .submit-btn:focus {
+  outline: none;
+ }
+
+.submit-btn {
+  color: #8A8070;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 40px;
+  transition: 0.3s all ease;
+  z-index: 1000;
+  height: 100vh;
+}
+
+.shake-enter {
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.shake-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.shake-exit {
+  opacity: 1;
+}
+
+.shake-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+.shake {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.result-container {
+  background: white;
+  margin-right: 100px;
+  width: 600px;
+  text-align: left;
+  height: 769px;
+  overflow-y: scroll;
+  color: black;
+  padding: 20px;
+  background: #f0eeeb;
+}
+
+.individual-result{
+  background: white;
+  border-bottom: 1px solid black;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background: #f0eeeb;
+}
+
+.result-container::-webkit-scrollbar {
+  display: none;
+}
+
+.individual-result pre {
+  display: inline;
+  background: #f0eeeb;
+}

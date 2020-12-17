@@ -21,7 +21,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fs := http.FileServer(http.Dir("./static"))
+	fs := http.FileServer(http.Dir("./hamlet/build"))
 	http.Handle("/", fs)
 
 	http.HandleFunc("/search", handleSearch(searcher))
@@ -100,7 +100,7 @@ func (s *Searcher) Search(query string) []string {
 				break
 			}
 		}
-		results = append(results, s.CompleteWorks[idx[0]:idx[1]])
+		results = append(results, s.CompleteWorks[idx[0]+2:idx[1]])
 	}
 	return results
 }
