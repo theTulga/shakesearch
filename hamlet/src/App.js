@@ -10,16 +10,23 @@ function App() {
   const [ resultVisible, setResultVisible] = useState(false);
   const [ results, setResults ] = useState([]);
   const nodeRef = useRef(null)
+  const [ lastQuery, setLastQuery ] = useState("")
   const handleSubmit = (e) => {
     e.preventDefault()
     setShowImage(false)
-    
+    // console.log("SUBMITTING", query)
     fetch(`/search?q=${query}`)
       .then((response) => {
         response.json().then(data => {
-          console.log("CALLING SET RESULTS")
-          setResults(data)
+          setLastQuery(query)
+          
+          if (data.length == 0) {
+            setResults(["No results found"])
+          } else {
+            setResults(data)
+          }
           setResultVisible(true)
+          // console.log("LAST QUERY IS NOW", query)
         })
       })
   }
@@ -29,8 +36,17 @@ function App() {
   }
 
   const renderedResult = results.map( (r, i) => {
-    let indx = r.toLowerCase().indexOf(query)
+    let indx = r.toLowerCase().indexOf(lastQuery.toLowerCase())
     if (!resultVisible) return null
+    if (indx == -1) {
+      return (
+        <div className="individual-result" key={i}>
+          <pre>
+            {r}
+          </pre>
+        </div>
+      )
+    }
     return (
       <div className="individual-result" key={i}>
         <pre>
@@ -40,10 +56,10 @@ function App() {
         </pre>
         
           
-        <b>{r.substring(indx, indx + query.length)}</b>
+        <b>{r.substring(indx, indx + lastQuery.length)}</b>
         <pre >
           {
-            r.substring(indx + query.length)
+            r.substring(indx + lastQuery.length)
           }
         </pre>  
       </div>

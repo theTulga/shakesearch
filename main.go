@@ -26,6 +26,7 @@ func main() {
 
 	http.HandleFunc("/search", handleSearch(searcher))
 
+	// port := "3001"
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3001"
@@ -43,8 +44,12 @@ type Searcher struct {
 	SuffixArray   *suffixarray.Index
 }
 
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
 func handleSearch(searcher Searcher) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// enableCors(&w)
 		query, ok := r.URL.Query()["q"]
 		if !ok || len(query[0]) < 1 {
 			w.WriteHeader(http.StatusBadRequest)
